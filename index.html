@@ -252,6 +252,214 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yshxdm.github.io/yshxdm.github.io/2018/11/29/医学图像/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yshxdM">
+      <meta itemprop="description" content="true">
+      <meta itemprop="image" content="/yshxdm.github.io/images/me-1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yshxdM">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/yshxdm.github.io/2018/11/29/医学图像/" itemprop="url">磁共振成像</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-29T17:44:38+08:00">
+                2018-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>###简介<br>
+最近在学习针对dMRI图像的基于压缩感知的重建过程。<br>
+在重建过程中有这几个环节：</p>
+<ul>
+<li>1）了解dMRI图像的特点。这里涉及到dMRI图像的成像原理；与其他磁共振图像的区别；dMRI图像的研究价值，包括这类图像有哪些临床上的应用，未来能有哪些应用前景；由于我主要做的是图像的重建过程的研究，所以还有dMRI图像重建过程上的缺点，这将包括成像阶段的信号采集和重建过程中的方法改进。</li>
+<li>2）由于采用的是压缩感知作为基础的理论，最重要的是包括对压缩感知内容，和现阶段应用上的学习。</li>
+<li>3）对欠采样过程的仿真的学习。由于现阶段基于压缩感知的MRI重建硬件上有较大限制，现实中几乎没有能够进行压缩感知欠采样获取MRI数据的仪器，所以想要做实验，需要模拟这个过程。</li>
+<li>4）一些各个领域新鲜理论和研究成果的学习，这将有助于丰富研究内容。通过对其他前辈的研究的了解，能够获取更多的灵感，也能够解决我对一些细节的困惑。</li>
+</ul>
+<hr>
+<p>###Ⅰ、dMRI图像的特点</p>
+<blockquote>
+<p>（这部分主要摘自网络上的资料）</p>
+</blockquote>
+<p>1、MRI图像的简要介绍<br>
+磁共振成像（magnetic resonance imaging,MRI）技术，通过探测水分子的扩散特征能获取生物组织的物理特征和微观结构，进而提供生物学和临床医学信息，具有无创、无须使用外源性对比剂等优点。</p>
+<p>磁共振扩散成像（magenetic resonance diffusion imaging）</p>
+<p>磁共振扩散谱成像（diffusion spectrum magnetic resonance imaging,DSI），获取纤维走向方向信息的方法，利用概率密度函数描述扩散运动完整的空间分布，以优异的角分辨率精确辨别出局部复杂交错的现为走向，得到真正意义上的六维扩散影像。</p>
+<p>磁共振弥散加权成像（DWI），DWI是在常规MRI序列的基础上，在x、y、z轴三个互相垂直的方向上施加弥散敏感梯度，从而获得反映体内水分子弥散运动状况的MR图像。<br>
+人体中70%是水，通常所说的弥散主要指水分子或含水组织的弥散。MR通过氢质子的磁化来标记分子而不干扰它的弥散过程。在任一常规MR成像序列中加入弥散梯度突出弥散效应即可行弥散加权成像，可以对组织中水分子的弥散行为直接进行检测。人体内水分子弥散运动速率与状态呈微米数量级的运动变化，与人体组织细胞的大小处于同一数量级。因此，弥散加权成像使MRI对人体的研究深入到细胞水平的微观世界，反映着人体组织的微观世界几何结构以及细胞内外水分子的转运等变化。</p>
+<p>弥散张量成像（DT-MRI）:研究弥散的定向性或“各向异性”是弥散成像的一个重要的研究领域。 即弥散张量成像(diffusion tensor imaging，DTl)。<br>
+在均质的水中，水分子的弥散运动是一个三维的随机运动，在不同的方向上弥散程度相同，称为各向同性（isotropic）。而在人体组织中，水分子在三维空间的弥散要受多种局部因素如细胞膜及大分子物质的影响。尤其在有髓鞘的神经纤维中，水分子沿轴突方向的弥散速度远大于垂直方向的弥散，此种有很强方向依赖性的弥散，即弥散的各向异性(anisotropic)，即水分子的活动在各个方向上其弥散规律不是随机均等的，而是有弥散方向的不均匀性。这个现象在脑白质、骨骼肌、心肌等多种组织中均可见到。各向异性的程度用量化指标来测定，并用向量图或彩色编码来表示即为弥散张量成像。</p>
+<blockquote>
+<p>什么是各向异性？<br>
+各向异性(anisotropy)：弥散是一个矢量，不仅有大小，也有方向。各向异性是水分子弥散矢量的重要体现，即水分子在某个位置上可以向任意一个方向运动，但是其向各个方向运动的量并不相同。<br>
+各向异性的存在一定程度上影响着脑肿瘤的ADC值和DWI信号，因此，在讨论和分析脑肿瘤DWI的结果时，必须要明确有无各向异性的影响。</p>
+</blockquote>
+<p>DTI应用：<br>
+最近十多年间，DTI被广泛运用于描绘心肌和骨骼肌的纤维构筑及解析生理功能的动力学特征。<br>
+脑出血</p>
+<hr>
+<p>###Ⅱ压缩感知</p>
+<blockquote>
+<p>压缩感知的理论在这几个博客中学习到很多：<br>
+<a href="https://blog.csdn.net/jbb0523/article/category/2637103" target="_blank" rel="noopener">https://blog.csdn.net/jbb0523/article/category/2637103</a><br>
+<a href="https://blog.csdn.net/abcjennifer/article/details/7775284" target="_blank" rel="noopener">https://blog.csdn.net/abcjennifer/article/details/7775284</a></p>
+</blockquote>
+<p>将CS应用于MRI是有天然适应性的，因为MRI图像采集的信号都是存在于k-space的，这不是常见的空间域图像，是傅里叶变换后频域图像，k-space中的每一个点都在一定程度上包含了全局的信息，正好符合CS中要求原始信号（在一定的稀疏基上）是稀疏的这一点。</p>
+<p>CS要解决的三个问题是：</p>
+<ul>
+<li>测量矩阵的设计</li>
+<li>找到一个合适的稀疏基</li>
+<li>重建方法的研究</li>
+</ul>
+<p>我们着重学习的是重建方法。</p>
+<p>到目前为止，可以分为传统的方法，和近年来基于深度学习的方法。</p>
+<p>传统的方法多是利用数学推导对欠定方程组的求解或优化解决。这一部分我还没有实践过。主要的缺点是需要大量迭代，运算复杂，耗费时间。</p>
+<p>现在研究的都是基于深度学习的方法了，这一部分有一些研究思想是将传统的基于优化的方法映射到深度神经网络中来求解。</p>
+<p>还有部分就是直接采用深度学习的方法来解决了。<br>
+总结一下有这些环节：</p>
+<ul>
+<li>将原始数据转换到频域，模拟欠采样过程，再将欠采样后的k-space图像转换到空域，这时候图像会产生混叠重影，因为k-space的图像在采样点不够的情况下，空域图像就会产生混叠重影，采样率越低，采样点越少，重影越严重</li>
+<li>设计网络架构。将数据放入NN后，NN不断加深的过程就相当于信号在不断变得稀疏。GAN和CNN都有用到过。</li>
+<li>训练过程很多会对放进NN的图像进行增强，即进行旋转，变形，亮度调整等等，增加网络的鲁棒性。<br>
+应该还有很多细节问题有待解决，但是由于我现在接触尚浅，后面遇到了再补充。</li>
+</ul>
+<hr>
+<p>###Ⅲ模拟欠采样</p>
+<blockquote>
+<p>这一部分是我近期遇到的问题</p>
+</blockquote>
+<p>我遇到的情况，欠采样的时候是直接用一个mask和k-space的图像点乘。<br>
+mask其实包含了欠采样和k-space扫描轨迹。<br>
+实验用的正常k-space数据是全采样的，是按照奈奎斯特采样定理采样得到的数据。我们在这个数据的基础上令一些值为0，就是丢弃掉一些k-space数据，就是欠采样。</p>
+<p>采样率是采样矩阵上1的数量与采样矩阵大小的比值。</p>
+<p>所以也可以以mask来设计一些扫描轨迹。<br>
+扫描轨迹描述的是磁共振信号在k-space的收集路径，不同的采集路径得到的伪影不同。针对不同的成像对象又有许多不同的轨迹：</p>
+<ul>
+<li>笛卡尔直线(cartesian line)</li>
+<li>径向轨迹(radial)</li>
+<li>平面回波(EPI)</li>
+<li>螺旋(spiral)</li>
+<li>随机(stochastic)</li>
+<li>花环(rosette)</li>
+</ul>
+<p>最近将着重研究radial轨迹的采集和欠采样。</p>
+<hr>
+<p>###其他<br>
+DTI其实属于广义的功能磁共振成像(functional Magnetic Resonance Imaging,fMRI)的，fMRI体现的是神经元活动所引发的血液动力的改变，主要被用于对人及动物的脑或脊髓的研究中。</p>
+<p>我研究MRI重建的目的主要有提高精度与缩短扫描时间。<br>
+那如何加快磁共振扫描时间呢，主要的研究方向有三个：</p>
+<ul>
+<li>1）基于物理方法的快速扫描序列</li>
+<li>2）基于硬件的并行成像</li>
+<li>3）基于信号处理的部分k空间数据成像</li>
+</ul>
+<p>第三个方向着重研究磁共振图像的先验信息，利用它们作为规范约束项来约束重建过程，具有不受物理、生理和硬件条件限制的优势，最后通过一系列优化方法从欠采样k空间数据重建磁共振图像。</p>
+<hr>
+<p>其实，基于压缩感知的重建很多停留在理论阶段，实际应用困难，但还是挺有前景的，要有信心。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yshxdm.github.io/yshxdm.github.io/2018/10/13/page/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -982,7 +1190,7 @@ Peace!</p>
               
                 <a href="/yshxdm.github.io/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -995,7 +1203,7 @@ Peace!</p>
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
